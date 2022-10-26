@@ -3,12 +3,12 @@ entries:
   withhelm-wordpress-helm:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2022-10-26T10:35:08.683633685-05:00"
+    created: "2022-10-26T10:44:10.037371958-05:00"
     description: A Helm chart for Kubernetes
-    digest: 7c8658661829d7a8c6d087296c6b6d1c9e1fea85ef3e43f992b6a15600f15424
+    digest: df4bc59f1cdc0f58a1f9ccccc7019290e39def3fe5e4fb9f1980721fc189951f
     name: withhelm-wordpress-helm
     type: application
     urls:
     - withhelm-wordpress-helm-0.1.0.tgz
     version: 0.1.0
-generated: "2022-10-26T10:35:08.683251694-05:00"
+generated: "2022-10-26T10:44:10.036355263-05:00"
