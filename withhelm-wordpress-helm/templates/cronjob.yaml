@@ -1,0 +1,62 @@
+{{ if eq .Values-override.tenants.customer1.enabledDBBackup "true" }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup
+  namespace: customer1
+spec:
+  schedule: "*/2 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: mariadb
+            image: mariadb:latest
+            imagePullPolicy: IfNotPresent
+            command: ["/bin/sh", "-c"]
+            args: 
+            - mysqldump -u root -p$MARIADB_ROOT_PASSWORD -h wordpress-mysql --all-databases > /var/lib/mysql/alldbs.sql;
+              date; echo all database has been backed up;
+            env:
+            - name: MARIADB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-pass
+                  key: password             
+
+            volumeMounts:
+            - name: cronjob-pv
+              mountPath: /var/lib/mysql/
+          volumes:
+          - name: cronjob-pv
+            persistentVolumeClaim:
+              claimName: cronjob-pvclaim
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cronjob-pvclaim
+  namespace: customer1
+  labels:
+    app: cronjob
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cronjob-pv
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/cronjob"
