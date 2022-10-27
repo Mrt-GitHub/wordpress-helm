@@ -5,4 +5,4 @@ metadata:
   namespace: customer1
 type: Opaque
 data:
-  password: "YQo=" #echo 'a'| base64
+  password: "YQ==" #echo 'a'| base64
