@@ -1,11 +1,10 @@
-{{- if .Values.tenants.customer1.enabledDBBackup }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: backup
-  namespace: customer1
 spec:
   schedule: "*/2 * * * *"
+  suspend: {{ .Values.tenant.enabledDBBackup }}
   jobTemplate:
     spec:
       template:
@@ -33,13 +32,11 @@ spec:
           - name: cronjob-pv
             persistentVolumeClaim:
               claimName: cronjob-pvclaim
-{{- end -}}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: cronjob-pvclaim
-  namespace: customer1
   labels:
     app: cronjob
 spec:
@@ -49,15 +46,15 @@ spec:
     requests:
       storage: 1Gi
 ---
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: cronjob-pv
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/data/cronjob"
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: cronjob-pv
+# spec:
+#   storageClassName: manual
+#   capacity:
+#     storage: 1Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   hostPath:
+#     path: "/data/cronjob"
