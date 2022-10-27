@@ -20,7 +20,7 @@ metadata:
   labels:
     app: wordpress
 spec:
-  replicas: {{ .Values-override.tenants.customer1.wpReplicas }}
+  replicas: {{ .Values.tenants.customer1.wpReplicas }}
   selector:
     matchLabels:
       app: wordpress
