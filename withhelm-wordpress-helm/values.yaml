@@ -1,4 +1,4 @@
 tenant:
   wpReplicas: 3
-  ingress: test1
+  ingress: test1.local
   enabledDBBackup: true
