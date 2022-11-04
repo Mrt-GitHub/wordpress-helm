@@ -45,16 +45,4 @@ spec:
   resources:
     requests:
       storage: 1Gi
----
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: cronjob-pv
-# spec:
-#   storageClassName: manual
-#   capacity:
-#     storage: 1Gi
-#   accessModes:
-#     - ReadWriteOnce
-#   hostPath:
-#     path: "/data/cronjob"
+
